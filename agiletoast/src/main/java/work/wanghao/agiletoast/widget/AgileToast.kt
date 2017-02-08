@@ -21,8 +21,9 @@ import work.wanghao.agiletoast.utils.AnimationUtils
 /**
  * @author doublemine
  *         Created  on 2017/02/08 15:25.
- *         Summary:
+ *         Summary: todo sticky bug when back
  */
+
 class AgileToast constructor(context: Context) {
   private val mContext: Context = context
   private var mMessage: String? = null
