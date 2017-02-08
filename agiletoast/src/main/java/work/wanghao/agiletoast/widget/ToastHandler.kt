@@ -20,18 +20,17 @@ class ToastHandler private constructor(looper: Looper) : android.os.Handler() {
 
   fun add(toast: AgileToast) {
     mQueue.offer(toast)
-    showNextToast(toast)
+    showNextToast()
   }
 
   override fun handleMessage(msg: Message?) {
     if (msg != null) {
-      if (msg.obj is AgileToast) {
-        when (msg.what) {
-          STATUS_SHOW_TOAST -> showToast(msg.obj as AgileToast)
-          STATUS_HIDE_TOAST -> hideToast(msg.obj as AgileToast)
-          STATUS_SHOW_NEXT_TOAST -> showNextToast(msg.obj as AgileToast)
-        }
+      when (msg.what) {
+        STATUS_SHOW_TOAST -> showToast(msg.obj as AgileToast)
+        STATUS_HIDE_TOAST -> hideToast(msg.obj as AgileToast)
+        STATUS_SHOW_NEXT_TOAST -> showNextToast()
       }
+
     }
     super.handleMessage(msg)
   }
@@ -66,7 +65,7 @@ class ToastHandler private constructor(looper: Looper) : android.os.Handler() {
 
   fun showToast(toast: AgileToast) {
     if (toast.isShowing()) return
-    toast.getRootView().addView(toast.getContentView())
+    toast.getContainerView().addView(toast.getContentView())
 
     val animationSet = toast.getShowAnimationSet()
     animationSet.start()
@@ -80,7 +79,7 @@ class ToastHandler private constructor(looper: Looper) : android.os.Handler() {
     }
   }
 
-  fun showNextToast(toast: AgileToast) {
+  fun showNextToast() {
     if (mQueue.isEmpty()) return
     val queueToast = mQueue.peek()
     if (!queueToast.isShowing()) {

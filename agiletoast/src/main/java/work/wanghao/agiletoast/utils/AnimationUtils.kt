@@ -12,15 +12,26 @@ import work.wanghao.agiletoast.widget.AgileToast
 
 object AnimationUtils {
 
-  val ANIMATION_DURATION: Long = 500
+  val ANIMATION_DURATION: Long = 300
 
   fun getShowAnimation(agileToast: AgileToast, animationType: AnimationType): AnimatorSet {
     when (animationType) {
-      AnimationType.ANIMATION_DRAWER -> {
+      AnimationType.ANIMATION_DRAWER_TOP -> {
         val drawerSet = AnimatorSet()
         drawerSet.playTogether(
             ObjectAnimator.ofFloat(agileToast.getContentView(), "translationY",
-                -agileToast.getContentView().measuredHeight as Float, 0f),
+                -(agileToast.getContentView().measuredHeight.toFloat()), 0f),
+            ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 0f, 1f)
+        )
+        drawerSet.duration = ANIMATION_DURATION
+        return drawerSet
+      }
+
+      AnimationType.ANIMATION_DRAWER_BOTTOM -> {
+        val drawerSet = AnimatorSet()
+        drawerSet.playTogether(
+            ObjectAnimator.ofFloat(agileToast.getContentView(), "translationY",
+                (agileToast.getContentView().measuredHeight.toFloat()), 0f),
             ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 0f, 1f)
         )
         drawerSet.duration = ANIMATION_DURATION
@@ -41,7 +52,7 @@ object AnimationUtils {
         val pullSet = AnimatorSet()
         pullSet.playTogether(
             ObjectAnimator.ofFloat(agileToast.getContentView(), "translationY",
-                agileToast.getContentView().measuredHeight as Float, 0f),
+                agileToast.getContentView().measuredHeight.toFloat(), 0f),
             ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 0f, 1f)
         )
         pullSet.duration = ANIMATION_DURATION
@@ -59,11 +70,22 @@ object AnimationUtils {
 
   fun getHideAnimation(agileToast: AgileToast, animationType: AnimationType): AnimatorSet {
     when (animationType) {
-      AnimationType.ANIMATION_DRAWER -> {
+      AnimationType.ANIMATION_DRAWER_TOP -> {
         val drawerSet = AnimatorSet()
         drawerSet.playTogether(
             ObjectAnimator.ofFloat(agileToast.getContentView(), "translationY", 0f,
-                -agileToast.getContentView().measuredHeight as Float),
+                -agileToast.getContentView().measuredHeight.toFloat()),
+            ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 1f, 0f)
+        )
+        drawerSet.duration = ANIMATION_DURATION
+        return drawerSet
+      }
+
+      AnimationType.ANIMATION_DRAWER_BOTTOM -> {
+        val drawerSet = AnimatorSet()
+        drawerSet.playTogether(
+            ObjectAnimator.ofFloat(agileToast.getContentView(), "translationY", 0f,
+                agileToast.getContentView().measuredHeight.toFloat()),
             ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 1f, 0f)
         )
         drawerSet.duration = ANIMATION_DURATION
@@ -87,7 +109,7 @@ object AnimationUtils {
 
         pullSet.playTogether(
             ObjectAnimator.ofFloat(agileToast.getContentView(), "translationY", 0f,
-                agileToast.getContentView().measuredHeight as Float),
+                agileToast.getContentView().measuredHeight.toFloat()),
             ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 1f, 0f)
         )
         pullSet.duration = ANIMATION_DURATION
