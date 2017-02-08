@@ -18,8 +18,7 @@ public class MainActivity extends AppCompatActivity {
     normalButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         AgileToast.Companion.build(MainActivity.this)
-            .setToastType(ToastType.BOTTOM)
-            .setText("这是一个测试...")
+            .setToastType(ToastType.BOTTOM).setText("AgileToast send msg...")
             .setAnimationType(AnimationType.ANIMATION_DRAWER_BOTTOM)
             .setToastBackgroundColor(R.color.colorAccent)
             .show();
