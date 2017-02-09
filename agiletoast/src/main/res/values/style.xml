@@ -3,29 +3,22 @@
 
   <style name="Animation"/>
 
-  <style name="Animation.Drawer.Bottom" parent="@android:style/Animation.Dialog">
-    <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+  <style name="Animation.Drawer.Bottom" parent="@android:style/Animation.Toast">
     <item name="android:windowEnterAnimation">@anim/animation_drawer_top_in</item>
     <item name="android:windowExitAnimation">@anim/animation_drawer_top_out</item>
   </style>
 
-  <style name="Animation.Drawer.Top" parent="@android:style/Animation.Dialog">
-    <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-
+  <style name="Animation.Drawer.Top" parent="@android:style/Animation.Toast">
     <item name="android:windowEnterAnimation">@anim/animation_drawer_bottom_in</item>
     <item name="android:windowExitAnimation">@anim/animation_drawer_bottom_out</item>
   </style>
 
-  <style name="Animation.Scale" parent="@android:style/Animation.Dialog">
-    <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-
+  <style name="Animation.Scale" parent="@android:style/Animation.Toast">
     <item name="android:windowEnterAnimation">@anim/animation_scale_in</item>
     <item name="android:windowExitAnimation">@anim/animation_scale_out</item>
   </style>
 
-  <style name="Animation.Normal" parent="@android:style/Animation.Dialog">
-    <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-
+  <style name="Animation.Normal" parent="@android:style/Animation.Toast">
     <item name="android:windowEnterAnimation">@anim/animation_normal_in</item>
     <item name="android:windowExitAnimation">@anim/animation_normal_out</item>
   </style>

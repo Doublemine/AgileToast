@@ -1,9 +1,11 @@
 package work.wanghao.agiletoast.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
@@ -16,6 +18,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import work.wanghao.agiletoast.BuildConfig
 import work.wanghao.agiletoast.R
 import work.wanghao.agiletoast.callback.OnDismissCallback
 import work.wanghao.agiletoast.utils.AnimationType
@@ -152,6 +155,7 @@ class AgileToast constructor(context: Context) {
 
   fun prepareTipsType(@DrawableRes drawable: Int) {
     mContentView = mLayoutInflater.inflate(R.layout.view_toast_tips, null)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) mContentView?.elevation = 3f
     val icon = mContentView?.findViewById(R.id.iv_icon) as ImageView
     icon.setImageResource(drawable)
     mMessageTextView = mContentView?.findViewById(
@@ -165,6 +169,7 @@ class AgileToast constructor(context: Context) {
   fun prepareNormalType() {
     mContentView = mLayoutInflater.inflate(work.wanghao.agiletoast.R.layout.view_toast_normal,
         null)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) mContentView?.elevation = 3f
     mMessageTextView = mContentView?.findViewById(
         work.wanghao.agiletoast.R.id.tv_message) as TextView?
     mMessageTextView?.setTextColor(mTextColor)
