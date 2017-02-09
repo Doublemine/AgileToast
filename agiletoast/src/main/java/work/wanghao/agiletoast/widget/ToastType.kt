@@ -8,11 +8,11 @@ package work.wanghao.agiletoast.widget
 enum class ToastType {
   NORMAL
   ,
-  BOTTOM
+  CLICK
   ,
-  CENTER
+  SUCCESS_RADIUS
   ,
-  TOP
+  WARNING_RADIUS
   ,
-  CUSTOM
+  ERROR_RADIUS
 }

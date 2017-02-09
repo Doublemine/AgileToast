@@ -2,6 +2,8 @@ package work.wanghao.agiletoast.utils
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.support.annotation.StyleRes
+import work.wanghao.agiletoast.R
 import work.wanghao.agiletoast.widget.AgileToast
 
 /**
@@ -12,7 +14,17 @@ import work.wanghao.agiletoast.widget.AgileToast
 
 object AnimationUtils {
 
+
   val ANIMATION_DURATION: Long = 300
+
+  @StyleRes fun getWindowShowAnimation(animationType: AnimationType): Int {
+    when (animationType) {
+      AnimationType.ANIMATION_DEFAULT -> return R.style.Animation_Normal
+      AnimationType.ANIMATION_DRAWER_BOTTOM -> return R.style.Animation_Drawer_Bottom
+      AnimationType.ANIMATION_DRAWER_TOP -> return R.style.Animation_Drawer_Top
+      AnimationType.ANIMATION_SCALE -> return R.style.Animation_Scale
+    }
+  }
 
   fun getShowAnimation(agileToast: AgileToast, animationType: AnimationType): AnimatorSet {
     when (animationType) {
@@ -48,16 +60,6 @@ object AnimationUtils {
         return scaleSet
       }
 
-      AnimationType.ANIMATION_PULL -> {
-        val pullSet = AnimatorSet()
-        pullSet.playTogether(
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "translationY",
-                agileToast.getContentView().measuredHeight.toFloat(), 0f),
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 0f, 1f)
-        )
-        pullSet.duration = ANIMATION_DURATION
-        return pullSet
-      }
 
       AnimationType.ANIMATION_DEFAULT -> {
         val defaultSet = AnimatorSet()
@@ -100,20 +102,6 @@ object AnimationUtils {
         )
         scaleSet.duration = ANIMATION_DURATION
         return scaleSet
-      }
-
-      AnimationType.ANIMATION_PULL -> {
-        val pullSet = AnimatorSet()
-
-
-
-        pullSet.playTogether(
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "translationY", 0f,
-                agileToast.getContentView().measuredHeight.toFloat()),
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 1f, 0f)
-        )
-        pullSet.duration = ANIMATION_DURATION
-        return pullSet
       }
 
       AnimationType.ANIMATION_DEFAULT -> {

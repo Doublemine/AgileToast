@@ -1,8 +1,10 @@
 package work.wanghao.agiletoast.widget
 
-import android.animation.Animator
+import android.content.Context
 import android.os.Looper
 import android.os.Message
+import android.util.Log
+import android.view.WindowManager
 import java.util.*
 
 /**
@@ -16,7 +18,7 @@ class ToastHandler private constructor(looper: Looper) : android.os.Handler() {
   private val STATUS_HIDE_TOAST = 0x23
   private val STATUS_SHOW_NEXT_TOAST = 0x34
 
-  private val mQueue: Queue<AgileToast> = LinkedList<AgileToast>()
+  private val mQueue: Queue<AgileToast> = LinkedList()
 
   fun add(toast: AgileToast) {
     mQueue.offer(toast)
@@ -25,9 +27,10 @@ class ToastHandler private constructor(looper: Looper) : android.os.Handler() {
 
   override fun handleMessage(msg: Message?) {
     if (msg != null) {
+      Log.d(ToastHandler::class.java.simpleName, "Current message=${msg.what}")
       when (msg.what) {
         STATUS_SHOW_TOAST -> showToast(msg.obj as AgileToast)
-        STATUS_HIDE_TOAST -> hideToast(msg.obj as AgileToast)
+        STATUS_HIDE_TOAST -> removeToast(msg.obj as AgileToast)
         STATUS_SHOW_NEXT_TOAST -> showNextToast()
       }
 
@@ -35,40 +38,28 @@ class ToastHandler private constructor(looper: Looper) : android.os.Handler() {
     super.handleMessage(msg)
   }
 
-  fun hideToast(toast: AgileToast) {
+  fun removeToast(toast: AgileToast) {
     if (!toast.isShowing()) {
       mQueue.remove(toast)
       return
     }
+
     if (!mQueue.contains(toast)) return
 
-    val animationSet = toast.getHideAnimationSet()
-    animationSet.addListener(object : Animator.AnimatorListener {
-      override fun onAnimationRepeat(p0: Animator?) {}
-
-      override fun onAnimationEnd(p0: Animator?) {
-        toast.getRootView().removeView(toast.getContainerView())
-        if (toast.getDismissCallback() != null) {
-          toast.getDismissCallback()?.onDismissCallback(toast)
-        }
-        sendEmptyMessage(STATUS_SHOW_NEXT_TOAST)
-      }
-
-      override fun onAnimationCancel(p0: Animator?) {}
-
-      override fun onAnimationStart(p0: Animator?) {}
-
-    })
-    animationSet.start()
+    (toast.getContext().applicationContext.getSystemService(
+        Context.WINDOW_SERVICE) as WindowManager?)?.removeView(toast.getContentView())
+    if (toast.getDismissCallback() != null) toast.getDismissCallback()!!.onDismissCallback(toast)
+    sendEmptyMessage(STATUS_SHOW_NEXT_TOAST)
     mQueue.poll()
   }
 
   fun showToast(toast: AgileToast) {
     if (toast.isShowing()) return
-    toast.getContainerView().addView(toast.getContentView())
 
-    val animationSet = toast.getShowAnimationSet()
-    animationSet.start()
+    (toast.getContext().applicationContext.getSystemService(
+        Context.WINDOW_SERVICE) as WindowManager?)?.addView(toast.getContentView(),
+        toast.getWindowManagerParams())
+
     val message = Message.obtain()
     message.what = STATUS_HIDE_TOAST
     message.obj = toast
@@ -89,6 +80,7 @@ class ToastHandler private constructor(looper: Looper) : android.os.Handler() {
       sendMessage(message)
     }
   }
+
 
   companion object {
     fun get(): ToastHandler {
