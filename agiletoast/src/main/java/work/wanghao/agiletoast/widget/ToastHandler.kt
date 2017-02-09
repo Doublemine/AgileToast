@@ -27,7 +27,6 @@ class ToastHandler private constructor(looper: Looper) : android.os.Handler() {
 
   override fun handleMessage(msg: Message?) {
     if (msg != null) {
-      Log.d(ToastHandler::class.java.simpleName, "Current message=${msg.what}")
       when (msg.what) {
         STATUS_SHOW_TOAST -> showToast(msg.obj as AgileToast)
         STATUS_HIDE_TOAST -> removeToast(msg.obj as AgileToast)
