@@ -6,14 +6,18 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingLeft="18dp"
+    android:paddingRight="18dp"
+    android:paddingTop="10dp"
     >
 
   <ImageView
       android:id="@+id/iv_icon"
       android:layout_width="24dp"
       android:layout_height="24dp"
-      android:layout_marginEnd="8dp"
-      android:layout_marginRight="8dp"
+      android:layout_marginEnd="6dp"
+      android:layout_marginRight="6dp"
       android:scaleType="centerInside"
       tools:ignore="ContentDescription"
       />
@@ -22,6 +26,8 @@
       android:id="@id/tv_message"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginEnd="6dp"
+      android:layout_marginRight="6dp"
       tools:text="This is an error toast."
       />
 

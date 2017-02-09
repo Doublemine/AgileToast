@@ -2,17 +2,13 @@ package work.wanghao.agiletoast.widget
 
 /**
  * @author doublemine
- *         Created  on 2017/02/08 15:36.
+ *         Created  on 2017/02/09 22:27.
  *         Summary:
  */
-enum class ToastType {
+enum class ToastStyle {
   NORMAL
   ,
-  CLICK
+  CORNER
   ,
-  SUCCESS
-  ,
-  WARNING
-  ,
-  ERROR
+  FILL
 }
