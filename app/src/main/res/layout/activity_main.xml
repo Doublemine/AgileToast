@@ -21,6 +21,20 @@
       />
 
   <Button
+      android:id="@+id/button_fill"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="FILL"
+      />
+
+  <Button
+      android:id="@+id/button_corner"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="CORNER"
+      />
+
+  <Button
       android:id="@+id/button_tips_info"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

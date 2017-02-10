@@ -1,6 +1,5 @@
 package work.wanghao.agiletoast.widget
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PixelFormat
@@ -17,8 +16,6 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import work.wanghao.agiletoast.BuildConfig
 import work.wanghao.agiletoast.R
 import work.wanghao.agiletoast.callback.OnDismissCallback
 import work.wanghao.agiletoast.utils.AnimationType
@@ -32,7 +29,7 @@ import work.wanghao.agiletoast.utils.ViewUtils
  *         Summary:
  */
 
-class AgileToast constructor(context: Context) {
+open class AgileToast constructor(context: Context) {
   private val mContext: Context = context
   private var mMessage: String? = null
   private var mType: ToastType = ToastType.NORMAL
@@ -92,7 +89,12 @@ class AgileToast constructor(context: Context) {
   fun getWindowManagerParams(): WindowManager.LayoutParams {
     val layoutParams = WindowManager.LayoutParams()
     layoutParams.height = FrameLayout.LayoutParams.WRAP_CONTENT
-    layoutParams.width = FrameLayout.LayoutParams.WRAP_CONTENT
+    when (mStyle) {
+      ToastStyle.FILL -> layoutParams.width = FrameLayout.LayoutParams.MATCH_PARENT
+      else -> {
+        layoutParams.width = FrameLayout.LayoutParams.WRAP_CONTENT
+      }
+    }
     layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
     layoutParams.format = PixelFormat.TRANSLUCENT
     layoutParams.windowAnimations = AnimationUtils.getWindowShowAnimation(mAnimationType)
@@ -108,11 +110,15 @@ class AgileToast constructor(context: Context) {
       ToastType.ERROR -> {
         if (mStyle == ToastStyle.NORMAL) mToastBackGroundDrawable = ViewUtils.getNormalBackground(
             ResourcesCompat.getColor(mContext.resources, R.color.colorError, null))
+        else if (mStyle == ToastStyle.FILL) mToastBackGroundDrawable = ViewUtils.getFillBackground(
+            ResourcesCompat.getColor(mContext.resources, R.color.colorError, null))
         else mToastBackGroundDrawable = ViewUtils.getCornerBackground(
             ResourcesCompat.getColor(mContext.resources, R.color.colorError, null))
       }
       ToastType.SUCCESS -> {
         if (mStyle == ToastStyle.NORMAL) mToastBackGroundDrawable = ViewUtils.getNormalBackground(
+            ResourcesCompat.getColor(mContext.resources, R.color.colorSuccess, null))
+        else if (mStyle == ToastStyle.FILL) mToastBackGroundDrawable = ViewUtils.getFillBackground(
             ResourcesCompat.getColor(mContext.resources, R.color.colorSuccess, null))
         else mToastBackGroundDrawable = ViewUtils.getCornerBackground(
             ResourcesCompat.getColor(mContext.resources, R.color.colorSuccess, null))
@@ -120,11 +126,15 @@ class AgileToast constructor(context: Context) {
       ToastType.WARNING -> {
         if (mStyle == ToastStyle.NORMAL) mToastBackGroundDrawable = ViewUtils.getNormalBackground(
             ResourcesCompat.getColor(mContext.resources, R.color.colorWarning, null))
+        else if (mStyle == ToastStyle.FILL) mToastBackGroundDrawable = ViewUtils.getFillBackground(
+            ResourcesCompat.getColor(mContext.resources, R.color.colorWarning, null))
         else mToastBackGroundDrawable = ViewUtils.getCornerBackground(
             ResourcesCompat.getColor(mContext.resources, R.color.colorWarning, null))
       }
       else -> {
         if (mStyle == ToastStyle.NORMAL) mToastBackGroundDrawable = ViewUtils.getNormalBackground(
+            Color.GRAY)
+        else if (mStyle == ToastStyle.FILL) mToastBackGroundDrawable = ViewUtils.getFillBackground(
             Color.GRAY)
         else mToastBackGroundDrawable = ViewUtils.getCornerBackground(Color.GRAY)
         if (mToastBackgroundColor != 0) {
@@ -134,8 +144,6 @@ class AgileToast constructor(context: Context) {
     }
 
     mContentView?.background = mToastBackGroundDrawable
-
-
   }
 
   fun onPrepareExecute() {

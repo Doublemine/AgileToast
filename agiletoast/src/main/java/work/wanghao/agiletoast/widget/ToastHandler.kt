@@ -47,9 +47,10 @@ class ToastHandler private constructor(looper: Looper) : android.os.Handler() {
 
     (toast.getContext().applicationContext.getSystemService(
         Context.WINDOW_SERVICE) as WindowManager?)?.removeView(toast.getContentView())
-    if (toast.getDismissCallback() != null) toast.getDismissCallback()!!.onDismissCallback(toast)
     sendEmptyMessage(STATUS_SHOW_NEXT_TOAST)
     mQueue.poll()
+    if (toast.getDismissCallback() != null) toast.getDismissCallback()!!.onDismissCallback(toast)
+
   }
 
   fun showToast(toast: AgileToast) {

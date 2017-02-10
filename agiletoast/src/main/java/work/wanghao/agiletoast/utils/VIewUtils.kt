@@ -22,6 +22,12 @@ object ViewUtils {
     return gradientDrawable
   }
 
+  fun getFillBackground(color: Int): GradientDrawable {
+    val gradientDrawable = GradientDrawable()
+    gradientDrawable.setColor(color)
+    return gradientDrawable
+  }
+
   fun getNormalBackground(color: Int): GradientDrawable {
     val gradientDrawable = GradientDrawable()
     gradientDrawable.cornerRadius = convert2Dip(4).toFloat()
