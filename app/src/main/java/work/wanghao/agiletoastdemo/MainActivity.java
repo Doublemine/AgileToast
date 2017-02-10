@@ -9,6 +9,7 @@ import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
 import work.wanghao.agiletoast.callback.OnDismissCallback;
 import work.wanghao.agiletoast.utils.AnimationType;
+import work.wanghao.agiletoast.utils.ViewUtils;
 import work.wanghao.agiletoast.widget.AgileToast;
 import work.wanghao.agiletoast.widget.Duration;
 import work.wanghao.agiletoast.widget.ToastStyle;
@@ -120,10 +121,14 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
   @Override public void onDismissCallback(@NotNull AgileToast toast) {
     AgileToast.Companion.build(MainActivity.this)
         .type(ToastType.NORMAL)
-        .text("call onDismiss Callback.").animation(AnimationType.ANIMATION_DRAWER_TOP)
+        .text("call onDismiss Callback.")
+        .animation(AnimationType.ANIMATION_DEFAULT)
         .duration(Duration.DURATION_CUSTOM, 1000L)
         .style(ToastStyle.FILL)
         .gravity(Gravity.TOP)
+        .textSize(16)
+        .bgColor(ResourcesCompat.getColor(getResources(), R.color.colorInfo, null))
+        .height(ViewUtils.INSTANCE.convert2Dip(56))
         .show();
   }
 }

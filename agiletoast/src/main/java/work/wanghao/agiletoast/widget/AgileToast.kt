@@ -52,7 +52,7 @@ open class AgileToast constructor(context: Context) {
 
   private var mOffsetX: Int = 0
   private var mOffsetY: Int = 0
-
+  private var mHeight: Int = FrameLayout.LayoutParams.WRAP_CONTENT
   private var mAnimationType: AnimationType = AnimationType.ANIMATION_DEFAULT
 
   fun isShowing(): Boolean {
@@ -88,7 +88,7 @@ open class AgileToast constructor(context: Context) {
 
   fun getWindowManagerParams(): WindowManager.LayoutParams {
     val layoutParams = WindowManager.LayoutParams()
-    layoutParams.height = FrameLayout.LayoutParams.WRAP_CONTENT
+    layoutParams.height = mHeight
     when (mStyle) {
       ToastStyle.FILL -> layoutParams.width = FrameLayout.LayoutParams.MATCH_PARENT
       else -> {
@@ -274,6 +274,11 @@ open class AgileToast constructor(context: Context) {
 
   fun style(style: ToastStyle): AgileToast {
     mStyle = style
+    return this
+  }
+
+  fun height(height: Int): AgileToast {
+    mHeight = height
     return this
   }
 }

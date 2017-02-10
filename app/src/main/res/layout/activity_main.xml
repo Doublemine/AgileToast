@@ -18,6 +18,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="Normal"
+      tools:ignore="HardcodedText"
       />
 
   <Button
@@ -25,6 +26,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="FILL"
+      tools:ignore="HardcodedText"
       />
 
   <Button
@@ -32,6 +34,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="CORNER"
+      tools:ignore="HardcodedText"
       />
 
   <Button
@@ -39,17 +42,20 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="INFO"
+      tools:ignore="HardcodedText"
       />
   <Button
       android:id="@+id/button_tips_success"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="SUCCESS"
+      tools:ignore="HardcodedText"
       />
   <Button
       android:id="@+id/button_tips_error"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="ERROR"
+      tools:ignore="HardcodedText"
       />
 </LinearLayout>
