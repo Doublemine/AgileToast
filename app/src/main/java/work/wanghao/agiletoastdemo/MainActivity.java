@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
     setContentView(R.layout.activity_main);
 
     Button normalButton = (Button) findViewById(R.id.button_normal);
-
     normalButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         AgileToast.Companion.build(MainActivity.this)
@@ -54,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
             .show();
       }
     });
-    Button cornerButton = (Button) findViewById(R.id.button_corner);
 
+    Button cornerButton = (Button) findViewById(R.id.button_corner);
     cornerButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         AgileToast.Companion.build(MainActivity.this)
@@ -86,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
             .show();
       }
     });
+
     Button tipsErrorButton = (Button) findViewById(R.id.button_tips_error);
     tipsErrorButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
             .show();
       }
     });
+
     Button tipsSuccessButton = (Button) findViewById(R.id.button_tips_success);
     tipsSuccessButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -119,8 +120,7 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
   @Override public void onDismissCallback(@NotNull AgileToast toast) {
     AgileToast.Companion.build(MainActivity.this)
         .type(ToastType.NORMAL)
-        .text("call onDismiss Callback.")
-        .animation(AnimationType.ANIMATION_DRAWER_BOTTOM)
+        .text("call onDismiss Callback.").animation(AnimationType.ANIMATION_DRAWER_TOP)
         .duration(Duration.DURATION_CUSTOM, 1000L)
         .style(ToastStyle.FILL)
         .gravity(Gravity.TOP)
