@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
             .duration(Duration.DURATION_CUSTOM, 1000L)
             .style(ToastStyle.NORMAL)
             .gravity(Gravity.CENTER | Gravity.BOTTOM)
-            .offsetY(200)
+            .offsetY(200).nougatCompat(true)
             .dismissCallback(MainActivity.this)
             .bgColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null))
             .show();
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
             .duration(Duration.DURATION_CUSTOM, 1000L)
             .style(ToastStyle.FILL)
             .gravity(Gravity.CENTER | Gravity.BOTTOM)
-            .offsetY(200)
+            .offsetY(200).nougatCompat(true)
             .dismissCallback(MainActivity.this)
             .bgColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null))
             .show();
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
             .duration(Duration.DURATION_CUSTOM, 1000L)
             .style(ToastStyle.CORNER)
             .gravity(Gravity.CENTER | Gravity.BOTTOM)
-            .offsetY(200)
+            .offsetY(200).nougatCompat(true)
             .dismissCallback(MainActivity.this)
             .bgColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null))
             .show();
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
             .animation(AnimationType.ANIMATION_SCALE)
             .duration(Duration.DURATION_LONG, 1000L)
             .gravity(Gravity.CENTER | Gravity.BOTTOM)
-            .offsetY(200)
+            .offsetY(200).nougatCompat(true)
             .dismissCallback(MainActivity.this)
             .show();
       }
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
             .duration(Duration.DURATION_LONG, 1000L)
             .gravity(Gravity.CENTER | Gravity.BOTTOM)
             .dismissCallback(MainActivity.this)
-            .offsetY(200)
+            .offsetY(200).nougatCompat(true)
             .show();
       }
     });
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
             .type(ToastType.SUCCESS)
             .text("Success!")
             .gravity(Gravity.CENTER | Gravity.BOTTOM)
-            .offsetY(200)
+            .offsetY(200).nougatCompat(true)
             .animation(AnimationType.ANIMATION_DRAWER_BOTTOM)
             .duration(Duration.DURATION_LONG, 1000L)
             .dismissCallback(MainActivity.this)
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements OnDismissCallback
         .duration(Duration.DURATION_CUSTOM, 1000L)
         .style(ToastStyle.FILL)
         .gravity(Gravity.TOP)
-        .textSize(16)
+        .textSize(16).nougatCompat(true)
         .bgColor(ResourcesCompat.getColor(getResources(), R.color.colorInfo, null))
         .height(ViewUtils.INSTANCE.convert2Dip(56))
         .show();

@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.PixelFormat
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
+import android.provider.Settings
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
@@ -21,6 +22,12 @@ import work.wanghao.agiletoast.callback.OnDismissCallback
 import work.wanghao.agiletoast.utils.AnimationType
 import work.wanghao.agiletoast.utils.AnimationUtils
 import work.wanghao.agiletoast.utils.ViewUtils
+import android.support.v4.app.ActivityCompat.startActivityForResult
+import android.content.Intent
+import android.net.Uri
+import android.support.v4.app.ActivityCompat.startActivity
+import android.support.v4.content.ContextCompat
+import android.widget.AbsListView
 
 
 /**
@@ -54,6 +61,10 @@ open class AgileToast constructor(context: Context) {
   private var mOffsetY: Int = 0
   private var mHeight: Int = FrameLayout.LayoutParams.WRAP_CONTENT
   private var mAnimationType: AnimationType = AnimationType.ANIMATION_DEFAULT
+
+  private var mCompatNougatGrant = false
+  private var mCompatNougatRequest = false
+  private var mCompatNougat = false
 
   fun isShowing(): Boolean {
     return mContentView != null && mContentView!!.isShown
@@ -98,14 +109,20 @@ open class AgileToast constructor(context: Context) {
     layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
     layoutParams.format = PixelFormat.TRANSLUCENT
     layoutParams.windowAnimations = AnimationUtils.getWindowShowAnimation(mAnimationType)
-    layoutParams.type = WindowManager.LayoutParams.TYPE_TOAST
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+        if (mCompatNougat) compatNougat(layoutParams)
+        else layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE
+      } else layoutParams.type = WindowManager.LayoutParams.TYPE_TOAST
+    } else layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE
     layoutParams.gravity = mGravity
     layoutParams.y = mOffsetY
     layoutParams.x = mOffsetX
     return layoutParams
   }
 
-  fun onFinalExecute() {
+  private fun onFinalExecute() {
     when (mType) {
       ToastType.ERROR -> {
         if (mStyle == ToastStyle.NORMAL) mToastBackGroundDrawable = ViewUtils.getNormalBackground(
@@ -146,7 +163,20 @@ open class AgileToast constructor(context: Context) {
     mContentView?.background = mToastBackGroundDrawable
   }
 
-  fun onPrepareExecute() {
+  private fun compatNougat(layoutParams: WindowManager.LayoutParams) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+      if (!Settings.canDrawOverlays(mContext) && !mCompatNougatRequest) {
+        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+        intent.data = Uri.parse("package:${mContext.applicationContext.packageName}")
+        ContextCompat.startActivity(mContext, intent, null)
+      }
+      mCompatNougatGrant = Settings.canDrawOverlays(mContext)
+      if (mCompatNougatGrant) layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE
+      else layoutParams.type = WindowManager.LayoutParams.TYPE_TOAST
+    }
+  }
+
+  private fun onPrepareExecute() {
     when (mType) {
       ToastType.NORMAL -> prepareNormalType()
       ToastType.CLICK -> TODO()
@@ -161,7 +191,7 @@ open class AgileToast constructor(context: Context) {
     mContentView?.measure(widthMeasureSpec, heightMeasureSpec)
   }
 
-  fun prepareTipsType(@DrawableRes drawable: Int) {
+  private fun prepareTipsType(@DrawableRes drawable: Int) {
     mContentView = mLayoutInflater.inflate(R.layout.view_toast_tips, null)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) mContentView?.elevation = 3f
     val icon = mContentView?.findViewById(R.id.iv_icon) as ImageView
@@ -174,7 +204,7 @@ open class AgileToast constructor(context: Context) {
 
   }
 
-  fun prepareNormalType() {
+  private fun prepareNormalType() {
     mContentView = mLayoutInflater.inflate(work.wanghao.agiletoast.R.layout.view_toast_normal,
         null)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) mContentView?.elevation = 3f
@@ -279,6 +309,11 @@ open class AgileToast constructor(context: Context) {
 
   fun height(height: Int): AgileToast {
     mHeight = height
+    return this
+  }
+
+  fun nougatCompat(compatNougatAnimation: Boolean): AgileToast {
+    mCompatNougat = compatNougatAnimation
     return this
   }
 }
