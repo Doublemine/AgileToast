@@ -64,9 +64,9 @@ class ToastHandler private constructor(looper: Looper) : android.os.Handler() {
     message.what = STATUS_HIDE_TOAST
     message.obj = toast
     when (toast.getDuration()) {
-      Duration.DURATION_CUSTOM -> sendMessageDelayed(message, toast.getCustomDuration())
-      Duration.DURATION_LONG -> sendMessageDelayed(message, 2000)
-      Duration.DURATION_SHORT -> sendMessageDelayed(message, 3500)
+      Duration.CUSTOM -> sendMessageDelayed(message, toast.getCustomDuration())
+      Duration.LONG -> sendMessageDelayed(message, 2000)
+      Duration.SHORT -> sendMessageDelayed(message, 3500)
     }
   }
 

@@ -7,9 +7,9 @@ package work.wanghao.agiletoast.widget
  */
 
 enum class Duration {
-  DURATION_SHORT
+  SHORT
   ,
-  DURATION_LONG
+  LONG
   ,
-  DURATION_CUSTOM
+  CUSTOM
 }

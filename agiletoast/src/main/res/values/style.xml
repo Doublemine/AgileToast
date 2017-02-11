@@ -18,6 +18,11 @@
     <item name="android:windowExitAnimation">@anim/animation_scale_out</item>
   </style>
 
+  <style name="Animation.Soft" parent="@android:style/Animation.Toast">
+    <item name="android:windowEnterAnimation">@anim/animation_soft_enter</item>
+    <item name="android:windowExitAnimation">@anim/animation_soft_exit</item>
+  </style>
+
   <style name="Animation.Normal" parent="@android:style/Animation.Toast">
     <item name="android:windowEnterAnimation">@anim/animation_normal_in</item>
     <item name="android:windowExitAnimation">@anim/animation_normal_out</item>

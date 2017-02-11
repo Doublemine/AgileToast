@@ -1,14 +1,18 @@
 package work.wanghao.agiletoast.widget
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
+import android.support.annotation.StyleRes
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -22,12 +26,6 @@ import work.wanghao.agiletoast.callback.OnDismissCallback
 import work.wanghao.agiletoast.utils.AnimationType
 import work.wanghao.agiletoast.utils.AnimationUtils
 import work.wanghao.agiletoast.utils.ViewUtils
-import android.support.v4.app.ActivityCompat.startActivityForResult
-import android.content.Intent
-import android.net.Uri
-import android.support.v4.app.ActivityCompat.startActivity
-import android.support.v4.content.ContextCompat
-import android.widget.AbsListView
 
 
 /**
@@ -45,7 +43,7 @@ open class AgileToast constructor(context: Context) {
 
   private var mToastHandler: ToastHandler? = null
   private var mCustomDuration: Long = 2000
-  private var mDuration: Duration = Duration.DURATION_SHORT
+  private var mDuration: Duration = Duration.SHORT
 
   private var mContentView: View? = null
 
@@ -60,12 +58,13 @@ open class AgileToast constructor(context: Context) {
   private var mOffsetX: Int = 0
   private var mOffsetY: Int = 0
   private var mHeight: Int = FrameLayout.LayoutParams.WRAP_CONTENT
-  private var mAnimationType: AnimationType = AnimationType.ANIMATION_DEFAULT
+  private var mAnimationType: AnimationType = AnimationType.DEFAULT
 
   private var mCompatNougatGrant = false
   private var mCompatNougatRequest = false
   private var mCompatNougat = false
 
+  @StyleRes private var mAnimation: Int? = null
   fun isShowing(): Boolean {
     return mContentView != null && mContentView!!.isShown
   }
@@ -109,11 +108,13 @@ open class AgileToast constructor(context: Context) {
     layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
     layoutParams.format = PixelFormat.TRANSLUCENT
     layoutParams.windowAnimations = AnimationUtils.getWindowShowAnimation(mAnimationType)
-
+    if (mAnimation != null) {
+      layoutParams.windowAnimations = mAnimation!!
+    }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
         if (mCompatNougat) compatNougat(layoutParams)
-        else layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE
+        else layoutParams.type = WindowManager.LayoutParams.TYPE_TOAST
       } else layoutParams.type = WindowManager.LayoutParams.TYPE_TOAST
     } else layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE
     layoutParams.gravity = mGravity
@@ -159,7 +160,6 @@ open class AgileToast constructor(context: Context) {
         }
       }
     }
-
     mContentView?.background = mToastBackGroundDrawable
   }
 
@@ -273,9 +273,9 @@ open class AgileToast constructor(context: Context) {
   }
 
   fun duration(duration: Duration, customDuration: Long?): AgileToast {
-    if (duration == Duration.DURATION_CUSTOM) {
+    if (duration == Duration.CUSTOM) {
       if (customDuration == null || customDuration < 800) throw IllegalArgumentException(
-          "when duration=Duration.DURATION_CUSTOM the customDuration must NOT NULL and the value >800")
+          "when duration=Duration.CUSTOM the customDuration must NOT NULL and the value >800")
       mCustomDuration = customDuration
     }
     mDuration = duration
@@ -309,6 +309,11 @@ open class AgileToast constructor(context: Context) {
 
   fun height(height: Int): AgileToast {
     mHeight = height
+    return this
+  }
+
+  fun animation(@StyleRes animation: Int): AgileToast {
+    mAnimation = animation
     return this
   }
 
