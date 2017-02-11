@@ -26,7 +26,7 @@ allprojects {
 
 ```
 dependencies {
-	        compile 'com.github.Doublemine:AgileToast:1.0.0'
+	        compile 'com.github.Doublemine:AgileToast:1.0.1'
 	}
 ```
 
