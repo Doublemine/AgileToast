@@ -32,9 +32,9 @@ object AnimationUtils {
       AnimationType.POLL -> {
         val drawerSet = AnimatorSet()
         drawerSet.playTogether(
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "translationY",
-                -(agileToast.getContentView().measuredHeight.toFloat()), 0f),
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 0f, 1f)
+            ObjectAnimator.ofFloat(agileToast.mContentView, "translationY",
+                -(agileToast.mContentView!!.measuredHeight.toFloat()), 0f),
+            ObjectAnimator.ofFloat(agileToast.mContentView, "alpha", 0f, 1f)
         )
         drawerSet.duration = ANIMATION_DURATION
         return drawerSet
@@ -43,9 +43,9 @@ object AnimationUtils {
       AnimationType.DRAWER -> {
         val drawerSet = AnimatorSet()
         drawerSet.playTogether(
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "translationY",
-                (agileToast.getContentView().measuredHeight.toFloat()), 0f),
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 0f, 1f)
+            ObjectAnimator.ofFloat(agileToast.mContentView, "translationY",
+                (agileToast.mContentView!!.measuredHeight.toFloat()), 0f),
+            ObjectAnimator.ofFloat(agileToast.mContentView, "alpha", 0f, 1f)
         )
         drawerSet.duration = ANIMATION_DURATION
         return drawerSet
@@ -54,15 +54,15 @@ object AnimationUtils {
       AnimationType.SCALE -> {
         val scaleSet = AnimatorSet()
         scaleSet.playTogether(
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "scaleX", 0f, 1f),
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "scaleY", 0f, 1f)
+            ObjectAnimator.ofFloat(agileToast.mContentView, "scaleX", 0f, 1f),
+            ObjectAnimator.ofFloat(agileToast.mContentView, "scaleY", 0f, 1f)
         )
         scaleSet.duration = ANIMATION_DURATION
         return scaleSet
       }
       else -> {
         val defaultSet = AnimatorSet()
-        defaultSet.play(ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 0f, 1f))
+        defaultSet.play(ObjectAnimator.ofFloat(agileToast.mContentView, "alpha", 0f, 1f))
         defaultSet.duration = ANIMATION_DURATION
         return defaultSet
       }
@@ -74,9 +74,9 @@ object AnimationUtils {
       AnimationType.POLL -> {
         val drawerSet = AnimatorSet()
         drawerSet.playTogether(
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "translationY", 0f,
-                -agileToast.getContentView().measuredHeight.toFloat()),
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 1f, 0f)
+            ObjectAnimator.ofFloat(agileToast.mContentView, "translationY", 0f,
+                -agileToast.mContentView!!.measuredHeight.toFloat()),
+            ObjectAnimator.ofFloat(agileToast.mContentView, "alpha", 1f, 0f)
         )
         drawerSet.duration = ANIMATION_DURATION
         return drawerSet
@@ -85,9 +85,9 @@ object AnimationUtils {
       AnimationType.DRAWER -> {
         val drawerSet = AnimatorSet()
         drawerSet.playTogether(
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "translationY", 0f,
-                agileToast.getContentView().measuredHeight.toFloat()),
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 1f, 0f)
+            ObjectAnimator.ofFloat(agileToast.mContentView, "translationY", 0f,
+                agileToast.mContentView!!.measuredHeight.toFloat()),
+            ObjectAnimator.ofFloat(agileToast.mContentView, "alpha", 1f, 0f)
         )
         drawerSet.duration = ANIMATION_DURATION
         return drawerSet
@@ -96,8 +96,8 @@ object AnimationUtils {
       AnimationType.SCALE -> {
         val scaleSet = AnimatorSet()
         scaleSet.playTogether(
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "scaleX", 1f, 0f),
-            ObjectAnimator.ofFloat(agileToast.getContentView(), "scaleY", 1f, 0f)
+            ObjectAnimator.ofFloat(agileToast.mContentView, "scaleX", 1f, 0f),
+            ObjectAnimator.ofFloat(agileToast.mContentView, "scaleY", 1f, 0f)
         )
         scaleSet.duration = ANIMATION_DURATION
         return scaleSet
@@ -105,7 +105,7 @@ object AnimationUtils {
 
       else -> {
         val defaultSet = AnimatorSet()
-        defaultSet.play(ObjectAnimator.ofFloat(agileToast.getContentView(), "alpha", 1f, 0f))
+        defaultSet.play(ObjectAnimator.ofFloat(agileToast.mContentView, "alpha", 1f, 0f))
         defaultSet.duration = ANIMATION_DURATION
         return defaultSet
       }

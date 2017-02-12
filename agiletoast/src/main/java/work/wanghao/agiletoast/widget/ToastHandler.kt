@@ -46,10 +46,10 @@ class ToastHandler private constructor(looper: Looper) : android.os.Handler() {
     if (!mQueue.contains(toast)) return
 
     (toast.getContext().applicationContext.getSystemService(
-        Context.WINDOW_SERVICE) as WindowManager?)?.removeView(toast.getContentView())
+        Context.WINDOW_SERVICE) as WindowManager?)?.removeView(toast.mContentView)
     sendEmptyMessage(STATUS_SHOW_NEXT_TOAST)
     mQueue.poll()
-    if (toast.getDismissCallback() != null) toast.getDismissCallback()!!.onDismissCallback(toast)
+    if (toast.mOnDismissCallback != null) toast.mOnDismissCallback!!.onDismissCallback(toast)
 
   }
 
@@ -57,14 +57,14 @@ class ToastHandler private constructor(looper: Looper) : android.os.Handler() {
     if (toast.isShowing()) return
 
     (toast.getContext().applicationContext.getSystemService(
-        Context.WINDOW_SERVICE) as WindowManager?)?.addView(toast.getContentView(),
+        Context.WINDOW_SERVICE) as WindowManager?)?.addView(toast.mContentView,
         toast.getWindowManagerParams())
 
     val message = Message.obtain()
     message.what = STATUS_HIDE_TOAST
     message.obj = toast
-    when (toast.getDuration()) {
-      Duration.CUSTOM -> sendMessageDelayed(message, toast.getCustomDuration())
+    when (toast.mDuration) {
+      Duration.CUSTOM -> sendMessageDelayed(message, toast.mCustomDuration)
       Duration.LONG -> sendMessageDelayed(message, 2000)
       Duration.SHORT -> sendMessageDelayed(message, 3500)
     }

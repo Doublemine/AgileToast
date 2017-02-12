@@ -35,17 +35,20 @@ import work.wanghao.agiletoast.utils.ViewUtils
  */
 
 open class AgileToast constructor(context: Context) {
-  private val mContext: Context = context
+  val mContext: Context = context
   private var mMessage: String? = null
   private var mType: ToastType = ToastType.NORMAL
   private val mLayoutInflater = LayoutInflater.from(context)
-  private var mOnDismissCallback: OnDismissCallback? = null
+  var mOnDismissCallback: OnDismissCallback? = null
 
   private var mToastHandler: ToastHandler? = null
-  private var mCustomDuration: Long = 2000
-  private var mDuration: Duration = Duration.SHORT
+  var mCustomDuration: Long = 2000
+    private set
+  var mDuration: Duration = Duration.SHORT
+    private set
 
-  private var mContentView: View? = null
+  var mContentView: View? = null
+    private set
 
   private var mToastBackGroundDrawable: GradientDrawable? = null
   private var mMessageTextView: TextView? = null
@@ -65,24 +68,9 @@ open class AgileToast constructor(context: Context) {
   private var mCompatNougat = false
 
   @StyleRes private var mAnimation: Int? = null
+
   fun isShowing(): Boolean {
     return mContentView != null && mContentView!!.isShown
-  }
-
-  fun getContentView(): View {
-    return mContentView!!
-  }
-
-  fun getDuration(): Duration {
-    return mDuration
-  }
-
-  fun getCustomDuration(): Long {
-    return mCustomDuration
-  }
-
-  fun getDismissCallback(): OnDismissCallback? {
-    return mOnDismissCallback
   }
 
   fun show() {
