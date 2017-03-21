@@ -74,6 +74,7 @@ open class AgileToast constructor(context: Context) {
   }
 
   fun show() {
+    if (mMessage.isNullOrEmpty()) return
     onPrepareExecute()
     mToastHandler = ToastHandler.get()
     onFinalExecute()
@@ -204,7 +205,7 @@ open class AgileToast constructor(context: Context) {
   }
 
 
-  constructor(context: Context, msg: String) : this(context) {
+  constructor(context: Context, msg: String?) : this(context) {
     mMessage = msg
   }
 
@@ -220,7 +221,7 @@ open class AgileToast constructor(context: Context) {
     }
   }
 
-  fun text(msg: String): AgileToast {
+  fun text(msg: String?): AgileToast {
     mMessage = msg
     return this
   }
